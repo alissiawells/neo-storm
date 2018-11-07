@@ -21,17 +21,28 @@
 </p>
 
 # Overview
-- Golang to NVM bytecode compiler
-- NEO Virtual machine
-- Smart contract debugger
-- Private network for quickly deploying and testing smart contracts
-- Tooling for deploying smart contracts in production environments
-- Package manager for smart contract modules that are written in Go
+[NEO](neo.org) is an open network for digital assets, digital identity and smart contracts. NEO supports writing in Java and Kotlin due to JVM, JavaScript due to Oracle Nashorn engine for the JVM support, Python due to Jython,
+C# due to their custom neocompiler and Go due to NVM bytecode compiler and NEO Virtual Machine.
+
+Although anti-quantum cryptography mechanism NeoQS is mentioned in the [White Paper](http://docs.neo.org/en-us/whitepaper.html), NEO mainterners actually use [ECC](https://github.com/neo-project/neo/tree/master/neo/Cryptography). Probably, in the sentence ‘NEO System will use NeoQS” the key word is ‘will’.
+
+[Neo-storm](https://github.com/CityOfZion/neo-storm) is a framework for smart-contracts on Go. 
+
 
 # Installation
-The following section will help you with installing neo-storm and it's dependencies. 
+Go version 1.11 + supports for ‘modules’ instead of using GOPATH. so use Dockerfile. For Go 10.7+:
+```
+$ go get -u github.com/CityOfZion/neo-storm
+$ cd $GOPATH/src/github.com/CityOfZion/neo-storm
+$ dep ensure -update
+$ make install
+$ neo-storm
+```
 
-[**A very in-depth tutorial about how to get started with neo-storm can be found here**](https://medium.com/@likkee.chong/neo-token-contract-nep-5-in-go-f6b0102c59ee)
+After the installation is completed, you can find the binary in `bin/neo-storm` or globally use `neo-storm`.
+```
+$ neo-storm
+```
 
 ## Project dependencies
 ### Golang
@@ -40,24 +51,14 @@ neo-storm requires a working and proper ***Golang*** installation. To install Go
 ### Godep
 For package management neo-storm uses ***dep***. To install dep you can check out these [installations instructions](https://github.com/golang/dep).
 
-# Installing the neo-storm framework
-### Unix
-`neo-storm` uses [dep](https://github.com/golang/dep) as its dependency manager. After installing `dep` you can run:
-```
-make install
-```
-
-After the installation is completed, you can find the binary in `bin/neo-storm` or globally use `neo-storm`.
 
 # Getting started
 Lot's of **examples contracts** can be found in the [examples folder](https://github.com/CityOfZion/neo-storm/tree/master/examples).
+Play [here](https://neocompiler.io/#/ecolab) or install / run on Docker container and try:
 
-### Create a new smart contract
-To create a new smart contract you can run the `init` command:
 ```
 neo-storm init --name mycontract
 ```
-
 This will generate a folder called `mycontract` with a `main.go` file in the root directory.
 
 The folder structure will look like this:
@@ -88,6 +89,8 @@ You can change location directory of the output file by adding the `-o, --out` f
 ```
 neo-storm compile -i path/to/file.go -o path/to/file.avm
 ```
+
+Deploying an NEP-5 token on the Mainnet will set you back by 490 GAS, so use [neo-privitenet](https://hub.docker.com/r/cityofzion/neo-privatenet/) for testing.
 
 # Tutorials
 - [Step-by-step guide on issuing your NEP-5 token on NEO’s Private net using Go](https://medium.com/@likkee.chong/neo-token-contract-nep-5-in-go-f6b0102c59ee)
